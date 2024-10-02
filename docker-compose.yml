@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  productdb:
+    container_name: product-service-db
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+  
+  orderdb:
+    container_name: order-service-db
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME_ORDER}
+    ports:
+      - 5431:5432
+    volumes:
+      - postgres-db-order:/var/lib/postgresql/data
+
+  productweb:
+    container_name: product-service
+    links:
+      - productdb
+    build: 
+      context: ./product-service
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+
+  orderweb:
+    container_name: order-service
+    build: 
+      context: ./order-service
+    depends_on:
+      orderdb:
+        condition: service_started
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/app
+
+volumes:
+  postgres-db:
+  postgres-db-order:
