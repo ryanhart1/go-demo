@@ -59,8 +59,8 @@ func CloseDB(db *gorm.DB) {
 	dbInstance, _ := db.DB()
 	err := dbInstance.Close()
 	if err != nil {
-		slog.Error("Error while closing DB connection. Not a problem actually", "error", err.Error())
+		slog.Error("Error while closing DB connection.", "error", err.Error())
 	} else {
-		slog.Info("DB connection is closed successfully")
+		slog.Info("DB connection closed successfully")
 	}
 }

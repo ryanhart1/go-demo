@@ -40,6 +40,16 @@ func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
 	return orders, nil
 }
 
+// Order is the resolver for the order field.
+func (r *queryResolver) Order(ctx context.Context, id string) (*model.Order, error) {
+	var order model.Order
+	result := database.GetDB().First(&order, id)
+	if result.Error != nil {
+		return nil, fmt.Errorf("could not find any orders with that ID")
+	}
+	return &order, nil
+}
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 

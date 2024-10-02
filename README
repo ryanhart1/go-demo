@@ -61,3 +61,14 @@ query orders {
   }
 }
 ```
+
+-Query an order by ID.
+```
+query singleOrders {
+  order(id: 1){
+    id
+    customer_name
+    orderItemId
+  }
+}
+```

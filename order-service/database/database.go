@@ -13,18 +13,12 @@ import (
 var DB *gorm.DB
 
 func ConnectToPostgreSQL() (*gorm.DB, error) {
-	// dsn := fmt.Sprintf(
-	// 	"host=localhost user=%s password=%s dbname=%s port=5433 sslmode=disable",
-	// 	os.Getenv("DB_USER"),
-	// 	os.Getenv("DB_PASSWORD"),
-	// 	os.Getenv("DB_NAME_ORDER"),
-	// )
 	dsn := fmt.Sprintf(
-		"host=orderdb user=ryan password=admin dbname=adminorder port=5432 sslmode=disable",
+		"host=orderdb user=%s password=%s dbname=%s port=5432 sslmode=disable",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME_ORDER"),
 	)
-	// dsn := fmt.Sprintf(
-	// 	"host=localhost user=ryan password=admin dbname=admin port=5432 sslmode=disable",
-	// )
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -73,8 +67,8 @@ func CloseDB(db *gorm.DB) {
 	dbInstance, _ := db.DB()
 	err := dbInstance.Close()
 	if err != nil {
-		slog.Error("Error while closing DB connection. Not a problem actually", "error", err.Error())
+		slog.Error("Error while closing DB connection", "error", err.Error())
 	} else {
-		slog.Info("DB connection is closed successfully")
+		slog.Info("DB connection closed successfully")
 	}
 }

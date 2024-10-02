@@ -11,6 +11,7 @@ type Order {
 
 type Query {
   orders: [Order!]!
+  order(id: ID!): Order
 }
 
 input NewOrder {
