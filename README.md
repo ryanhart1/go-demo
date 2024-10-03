@@ -14,7 +14,7 @@ This project consists of:
 - [Usage](#usage)
 
 ## Installation
-- The peoject can be ran using the command `docker compose up --build`
+- The project can be ran using the command `docker compose up --build`
 
 ## Usage
 
